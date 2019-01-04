@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h2>{{theData}}</h2>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -31,12 +32,31 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'HelloWorld',
+  data() {
+    return {
+      theData: 'default'
+    }
+  },
   props: {
     msg: String
+  },
+  mounted() {
+    // this.func();
+  },
+  methods: {
+    func: function() {
+      alert("test");
+      axios
+      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(response => (this.theData = response))
+      return "this is a text";
+    }
   }
-}
+} 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
