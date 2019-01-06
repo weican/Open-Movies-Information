@@ -31,7 +31,7 @@
             </b-col>
             <b-col>
               <figure>
-              <chart :options="setMostPopOption" ref="bar" @mouseover="mouseOver" />
+              <chart :options="setMostPopOption" ref="bar" @mouseover="mouseOver"/>
               </figure>
             </b-col>
             
@@ -41,6 +41,15 @@
               <figure>
               <chart :options="setOption" ref="bar" theme="ovilia-green" auto-resize/>
               </figure>
+            </b-col>
+            <b-col>
+              <b-card no-body header="<b>Genres</b>">
+                <b-list-group flush>
+                  <b-list-group-item v-for="genre in selectedMovieGenre" @mouseover="genreMouseOver(genre.category_name)" button> 
+                    {{ genre.category_name }}
+                  </b-list-group-item>
+                </b-list-group>
+              </b-card>
             </b-col>
           </b-row>
         </b-container>
@@ -65,6 +74,13 @@ export default {
       subtitle: 'Providing movies information for you',
       movieData: [],
       baseImgUrl: "https://image.tmdb.org/t/p/w500/",
+      hostUrl: "http://localhost:8080/",
+      genreList: new Map(),
+      selectedMovieGenre: [],
+      items: [
+      { message: 'Foo' },
+      { message: 'Bar' }
+    ],
       selectedMovie: {
         title: "",
         overview: "",
@@ -165,6 +181,10 @@ export default {
     mouseOver: function(e) {
       this.updateMoiveCard(e.dataIndex);
     },
+    genreMouseOver: function(categoryName) {
+      console.log(categoryName)
+      
+    },
     updateMoiveCard(index) {
       this.selectedMovie.title = this.movieData[this.movieData.length - index - 1].title;
       this.selectedMovie.overview = this.movieData[this.movieData.length - index - 1].overview;
@@ -187,10 +207,17 @@ export default {
           ]
         }
       };
+      this.selectedMovieGenre = this.genreList[this.movieData[this.movieData.length - index - 1].genre_id];
     },
     getMoviesInfo: function() {
       axios
-      .get('http://localhost:8080/getAll')
+      .get(this.hostUrl+ 'getGenre')
+      .then(response => {
+        this.genreList = response.data;
+      })
+
+      axios
+      .get(this.hostUrl+ 'getAll')
       .then(
         
         response => { 
