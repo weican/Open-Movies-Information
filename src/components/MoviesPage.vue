@@ -30,7 +30,7 @@
             <b-col>
               <b-card>
                 <figure>
-                <chart :options="setMostPopOption" ref="bar" @mouseover="mostPopMouseOver" />
+                <chart :options="setMostPopOption" ref="bar" @mouseover="mostPopMouseOver"/>
                 </figure>
               </b-card>
             </b-col>
@@ -275,19 +275,12 @@ export default {
       
     },
     getMoviesInfo: function() {
-      axios
-      .get(this.hostUrl+ 'getGenre')
-      .then(response => {
-        this.genreList = response.data;
-      })
-
+ 
       axios
       .get(this.hostUrl+ 'getAll')
       .then(
-        
         response => { 
           this.movieData = response.data;
-          this.updateMoiveInfo(this.movieData.length-1);
           let movieName =  response.data.map(element => {
               return element.title;
           })
@@ -336,9 +329,20 @@ export default {
             type: 'category',
             data: movieName
           }
-          
+
         }
+       
       )
+      .then(() =>{
+        axios
+          .get(this.hostUrl+ 'getGenre')
+          .then(response => {
+            this.genreList = response.data;
+            this.updateMoiveInfo(this.movieData.length-1);
+          })
+
+       
+      }) 
     }
   }
 } 
