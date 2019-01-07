@@ -7,16 +7,14 @@
           <b-row>
             <b-col>
               <b-card v-bind:title= "selectedMovie.title"
-                    tag="article"
-                    style="max-width: 50rem;"
-                    class="mb-2">
+                    style="max-width: 50rem;">
               <b-row>
                 <b-col>
                   <b-img thumbnail fluid v-bind:src= "selectedMovie.poster_path" alt="Thumbnail" />
                 </b-col>
                 <b-col>
                   <figure>
-                    <chart style="width:100%; height:100%" ref="gauge" :options="setVoteOption" />
+                    <chart style="width:100%; height:100%" ref="gauge" :options="setVoteOption"/>
                   </figure>
                   <p class="card-text">
                     {{selectedMovie.overview}}
@@ -30,21 +28,25 @@
             </b-card>
             </b-col>
             <b-col>
-              <figure>
-              <chart :options="setMostPopOption" ref="bar" @mouseover="mostPopMouseOver" />
-              </figure>
+              <b-card>
+                <figure>
+                <chart :options="setMostPopOption" ref="bar" @mouseover="mostPopMouseOver" />
+                </figure>
+              </b-card>
             </b-col>
             
           </b-row>
           <b-row>
             <b-col>
-              <figure>
-              <chart :options="setOption" ref="bar" />
-              </figure>
+              <b-card>
+                <figure>
+                <chart :options="setOption" ref="bar" />
+                </figure>
+              </b-card>
             </b-col>
             <b-col>
-              <b-card no-body header="<b>Genres</b>">
-                <b-list-group flush>
+              <b-card v-bind:title= "selectedMovie.title">
+                <b-list-group>
                   <b-list-group-item v-for="genre in selectedMovieGenre" @mouseover="genreMouseOver(genre.category_name)" button> 
                     {{ genre.category_name }}
                   </b-list-group-item>
@@ -225,12 +227,12 @@ export default {
       this.updateBudgetAndRevenueChart(categoryName)
     },
     updateBudgetAndRevenueChart(categoryName) {
-      let chart = [];
+      let categoryArray = [];
       for(let id in this.genreList) {
           let genreDetail =  this.genreList[id]
-          for(let temp of genreDetail) {
-            if(temp.category_name == categoryName) {
-              chart.push(id);
+          for(let val of genreDetail) {
+            if(val.category_name == categoryName) {
+              categoryArray.push(id);
             }
           }
       }
@@ -242,14 +244,14 @@ export default {
       let budget = [];
       let revenue = [];
       let title = [];
-      for(let index in chart) {
-        budget.push(specificMovies.get(parseInt(chart[index])).budget);
-        revenue.push(specificMovies.get(parseInt(chart[index])).revenue);
-        title.push(specificMovies.get(parseInt(chart[index])).title);
+      for(let index in categoryArray) {
+        budget.push(specificMovies.get(parseInt(categoryArray[index])).budget);
+        revenue.push(specificMovies.get(parseInt(categoryArray[index])).revenue);
+        title.push(specificMovies.get(parseInt(categoryArray[index])).title);
       }
       this.setOption.title = {
         text: categoryName + " budeget and revenue",
-        subtitle: "2018"
+        subtext: ""
       }
       this.setOption.xAxis= [
         {
