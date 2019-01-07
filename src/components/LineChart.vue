@@ -31,7 +31,7 @@
             </b-col>
             <b-col>
               <figure>
-              <chart :options="setMostPopOption" ref="bar" @mouseover="mouseOver"/>
+              <chart :options="setMostPopOption" ref="bar" @mouseover="mostPopMouseOver" />
               </figure>
             </b-col>
             
@@ -39,7 +39,7 @@
           <b-row>
             <b-col>
               <figure>
-              <chart :options="setOption" ref="bar" theme="ovilia-green" auto-resize/>
+              <chart :options="setOption" ref="bar" />
               </figure>
             </b-col>
             <b-col>
@@ -125,17 +125,32 @@ export default {
         title: {
           text: "Budget/Rev chart"
         },
-        xAxis: {
-          type: 'category',
-          data: []
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
         },
-        yAxis: {
-           type: 'value',
+        tooltip : {
+          trigger: 'axis'
         },
-        series: [{
-          data: [820, 932, 901, 934, 1290, 1330, 1300],
-          type: 'bar'
-        }]
+        calculable : true,
+        xAxis: [
+          {
+            axisLabel: {
+              rotate: 45,
+              formatter:  function(value) {
+                return value.length > 10? value.substring(0,10) + "...": value;
+              }
+            },
+            type : 'category'
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ]
       },
       setVoteOption: {
         series: [
@@ -178,14 +193,10 @@ export default {
     this.getMoviesInfo();
   },
   methods: {
-    mouseOver: function(e) {
-      this.updateMoiveCard(e.dataIndex);
+    mostPopMouseOver: function(e) {
+      this.updateMoiveInfo(e.dataIndex);
     },
-    genreMouseOver: function(categoryName) {
-      console.log(categoryName)
-      
-    },
-    updateMoiveCard(index) {
+    updateMoiveInfo(index) {
       this.selectedMovie.title = this.movieData[this.movieData.length - index - 1].title;
       this.selectedMovie.overview = this.movieData[this.movieData.length - index - 1].overview;
       this.selectedMovie.poster_path = this.baseImgUrl + this.movieData[this.movieData.length - index - 1].poster_path;
@@ -208,6 +219,58 @@ export default {
         }
       };
       this.selectedMovieGenre = this.genreList[this.movieData[this.movieData.length - index - 1].genre_id];
+      this.updateBudgetAndRevenueChart(this.selectedMovieGenre[0].category_name)
+    },
+    genreMouseOver: function(categoryName) {
+      this.updateBudgetAndRevenueChart(categoryName)
+    },
+    updateBudgetAndRevenueChart(categoryName) {
+      let chart = [];
+      for(let id in this.genreList) {
+          let genreDetail =  this.genreList[id]
+          for(let temp of genreDetail) {
+            if(temp.category_name == categoryName) {
+              chart.push(id);
+            }
+          }
+      }
+
+      let specificMovies = new Map();
+      for(let movie of this.movieData) {
+        specificMovies.set(movie.movie_id, {title: movie.title ,budget: movie.budget, revenue: movie.revenue});
+      }
+      let budget = [];
+      let revenue = [];
+      let title = [];
+      for(let index in chart) {
+        budget.push(specificMovies.get(parseInt(chart[index])).budget);
+        revenue.push(specificMovies.get(parseInt(chart[index])).revenue);
+        title.push(specificMovies.get(parseInt(chart[index])).title);
+      }
+      this.setOption.title = {
+        text: categoryName + " budeget and revenue",
+        subtitle: "2018"
+      }
+      this.setOption.xAxis= [
+        {
+          data: title
+        }
+      ]
+      
+      this.setOption.series = [ 
+        {
+          name : 'budget',
+          type: 'bar',
+          data: budget
+        },
+        {
+          name: 'revenue',
+          type: 'bar',
+          data: revenue
+        },
+        
+      ]
+      
     },
     getMoviesInfo: function() {
       axios
@@ -222,7 +285,7 @@ export default {
         
         response => { 
           this.movieData = response.data;
-          this.updateMoiveCard(this.movieData.length-1);
+          this.updateMoiveInfo(this.movieData.length-1);
           let movieName =  response.data.map(element => {
               return element.title;
           })
