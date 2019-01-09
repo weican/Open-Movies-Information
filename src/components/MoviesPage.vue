@@ -1,51 +1,49 @@
 <template>
-  <div class="hello">
+  <div>
     <h1>{{ msg }}</h1>
     <h4>{{subtitle}}</h4>
     
          <b-container fluid class="p-4">
-          <b-row>
-            <b-col>
+          <b-row class="mb-4">
+            <b-col  class="shadow p-3 mb-5 mr-4 bg-white rounded">
               <b-card v-bind:title= "selectedMovie.title"
                     style="max-width: 50rem;">
-              <b-row>
-                <b-col>
-                  <b-img thumbnail fluid v-bind:src= "selectedMovie.poster_path" alt="Thumbnail" />
-                </b-col>
-                <b-col>
-                  <figure>
-                    <chart style="width:100%; height:100%" ref="gauge" :options="setVoteOption"/>
-                  </figure>
-                  <p class="card-text">
-                    {{selectedMovie.overview}}
-                  </p>
-
-                </b-col>
-              </b-row>
-              <div slot="footer">
-                  <small class="text-muted">Release date: {{selectedMovie.releaseData}}</small>
-              </div>
-            </b-card>
+                <b-row>
+                  <b-col>
+                    <b-img thumbnail fluid v-bind:src= "selectedMovie.poster_path" alt="Thumbnail" />
+                  </b-col>
+                  <b-col>
+                    <figure>
+                      <chart style="width:100%; height:100%" ref="gauge" :options="setVoteOption"/>
+                    </figure>
+                    <p class="card-text text-left">
+                      {{selectedMovie.overview}}
+                    </p>
+                  </b-col>
+                </b-row>
+                <div slot="footer">
+                    <small class="text-muted">Release date: {{selectedMovie.releaseData}}</small>
+                </div>
+              </b-card>
             </b-col>
-            <b-col>
+            <b-col  class="shadow p-3 mb-5 bg-white rounded">
               <b-card>
                 <figure>
                 <chart :options="setMostPopOption" ref="bar" @mouseover="mostPopMouseOver"/>
                 </figure>
               </b-card>
             </b-col>
-            
           </b-row>
-          <b-row>
-            <b-col>
+          <b-row  class="mb-4">
+            <b-col  class="shadow p-3 mb-5 mr-4 bg-white rounded">
               <b-card>
                 <figure>
                 <chart :options="setOption" ref="bar" />
                 </figure>
               </b-card>
             </b-col>
-            <b-col>
-              <b-card v-bind:title= "selectedMovie.title">
+            <b-col  class="shadow p-3 mb-5 bg-white rounded">
+              <b-card title= "Genre">
                 <b-list-group>
                   <b-list-group-item v-for="genre in selectedMovieGenre" @mouseover="genreMouseOver(genre.category_name)" button> 
                     {{ genre.category_name }}
@@ -54,8 +52,24 @@
               </b-card>
             </b-col>
           </b-row>
+          
         </b-container>
-     
+        <section id="lab_social_icon_footer">
+          <b-row>
+            <b-col cols="auto" class="mr-auto p-5">
+              <footer class="page-footer font-small blue">
+              <div class="footer-copyright text-center py-2"><b>© 2019 Wales Chang</b>
+              </div>
+              </footer>
+            </b-col>
+            <b-col cols="auto"  class="p-5">
+              <div class="text-center center-block">
+              <a href="https://github.com/weican/cards-ui"><i id="social-gb" class="fa fa-github-square fa-3x social"></i></a>
+              <a href="https://www.linkedin.com/in/wales-chang-41250b63/p"><i id="social-li" class="fa fa-linkedin-square fa-3x social"></i></a>
+            </div>
+            </b-col>
+          </b-row>
+        </section>
   </div>
 </template>
 
@@ -66,6 +80,7 @@ import 'echarts/lib/component/title'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/chart/gauge'
+
 export default {
   name: 'LineChart',
   components: {
@@ -200,7 +215,19 @@ export default {
     },
     updateMoiveInfo(index) {
       this.selectedMovie.title = this.movieData[this.movieData.length - index - 1].title;
-      this.selectedMovie.overview = this.movieData[this.movieData.length - index - 1].overview;
+      if(this.movieData[this.movieData.length - index - 1].overview.length <= 200) {
+         this.selectedMovie.overview = this.movieData[this.movieData.length - index - 1].overview
+      } else {
+        let words = "";
+        for(let i = 200; i < this.movieData[this.movieData.length - index - 1].overview.length; i++) {
+            words = this.movieData[this.movieData.length - index - 1].overview[i];
+            if(words == " " || words == ".") {
+              this.selectedMovie.overview = this.movieData[this.movieData.length - index - 1].overview.substring(0,i) + "..."
+              break;
+            }
+        }
+        
+      }
       this.selectedMovie.poster_path = this.baseImgUrl + this.movieData[this.movieData.length - index - 1].poster_path;
       this.selectedMovie.releaseData =  this.movieData[this.movieData.length - index - 1].release_date;
       this.setVoteOption.series[0].data = [{value: this.movieData[this.movieData.length - index - 1].vote_avg * 10}];
@@ -329,9 +356,7 @@ export default {
             type: 'category',
             data: movieName
           }
-
         }
-       
       )
       .then(() =>{
         axios
@@ -340,7 +365,6 @@ export default {
             this.genreList = response.data;
             this.updateMoiveInfo(this.movieData.length-1);
           })
-
        
       }) 
     }
@@ -373,4 +397,40 @@ li {
 a {
   color: #42b983;
 }
+#lab_social_icon_footer {
+  background-color: #dedede;
+}
+
+#lab_social_icon_footer a {
+  color: #333;
+}
+
+#lab_social_icon_footer .social:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+}
+
+#lab_social_icon_footer .social {
+  -webkit-transform: scale(0.8);
+  /* Browser Variations: */
+  
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+}
+/*
+    Multicoloured Hover Variations
+*/
+
+#lab_social_icon_footer #social-gb:hover {
+  color: #3B5998;
+}
+
+#lab_social_icon_footer #social-li:hover {
+  color: #4099FF;
+}
+
 </style>
