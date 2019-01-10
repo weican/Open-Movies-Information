@@ -1,13 +1,11 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
-    <h4>{{subtitle}}</h4>
-    
+    <b-jumbotron header-level="5" v-bind:header="title" v-bind:lead="subtitle" >
+    </b-jumbotron>
          <b-container fluid class="p-4">
           <b-row class="mb-4">
             <b-col  class="shadow p-3 mb-5 mr-4 bg-white rounded">
-              <b-card v-bind:title= "selectedMovie.title"
-                    style="max-width: 50rem;">
+              <b-card v-bind:title= "selectedMovie.title">
                 <b-row>
                   <b-col>
                     <b-img thumbnail fluid v-bind:src= "selectedMovie.poster_path" alt="Thumbnail" />
@@ -26,7 +24,7 @@
                 </div>
               </b-card>
             </b-col>
-            <b-col  class="shadow p-3 mb-5 bg-white rounded">
+            <b-col class="shadow p-3 mb-5 bg-white rounded">
               <b-card>
                 <figure>
                 <chart :options="setMostPopOption" ref="bar" @mouseover="mostPopMouseOver"/>
@@ -38,7 +36,7 @@
             <b-col  class="shadow p-3 mb-5 mr-4 bg-white rounded">
               <b-card>
                 <figure>
-                <chart :options="setOption" ref="bar" />
+                <chart :options="setBudgetAndRevenueOption" ref="bar" />
                 </figure>
               </b-card>
             </b-col>
@@ -54,22 +52,6 @@
           </b-row>
           
         </b-container>
-        <section id="lab_social_icon_footer">
-          <b-row>
-            <b-col cols="auto" class="mr-auto p-5">
-              <footer class="page-footer font-small blue">
-              <div class="footer-copyright text-center py-2"><b>© 2019 Wales Chang</b>
-              </div>
-              </footer>
-            </b-col>
-            <b-col cols="auto"  class="p-5">
-              <div class="text-center center-block">
-              <a href="https://github.com/weican/cards-ui"><i id="social-gb" class="fa fa-github-square fa-3x social"></i></a>
-              <a href="https://www.linkedin.com/in/wales-chang-41250b63/p"><i id="social-li" class="fa fa-linkedin-square fa-3x social"></i></a>
-            </div>
-            </b-col>
-          </b-row>
-        </section>
   </div>
 </template>
 
@@ -94,10 +76,6 @@ export default {
       hostUrl: "http://localhost:8080/",
       genreList: new Map(),
       selectedMovieGenre: [],
-      items: [
-      { message: 'Foo' },
-      { message: 'Bar' }
-    ],
       selectedMovie: {
         title: "",
         overview: "",
@@ -106,7 +84,10 @@ export default {
       },
       setMostPopOption: {
         title: {
-          text: "Most pop"
+          text: "Most popurlity movies in 2018",
+          textStyle : {
+            fontSize: 22
+          }
         },
         grid: {
           left: '3%',
@@ -138,9 +119,12 @@ export default {
           }
         }
       },
-      setOption : {
+      setBudgetAndRevenueOption : {
         title: {
-          text: "Budget/Rev chart"
+          text: "Budget/Rev chart",
+          textStyle : {
+            fontSize: 22
+          }
         },
         grid: {
           left: '3%',
@@ -204,7 +188,7 @@ export default {
     }
   },
   props: {
-    msg: String
+    title: String
   },
   mounted() {
     this.getMoviesInfo();
@@ -215,7 +199,7 @@ export default {
     },
     updateMoiveInfo(index) {
       this.selectedMovie.title = this.movieData[this.movieData.length - index - 1].title;
-      if(this.movieData[this.movieData.length - index - 1].overview.length <= 200) {
+      if(this.movieData[this.movieData.length - index - 1].overview.length <= 230) {
          this.selectedMovie.overview = this.movieData[this.movieData.length - index - 1].overview
       } else {
         let words = "";
@@ -276,17 +260,17 @@ export default {
         revenue.push(specificMovies.get(parseInt(categoryArray[index])).revenue);
         title.push(specificMovies.get(parseInt(categoryArray[index])).title);
       }
-      this.setOption.title = {
+      this.setBudgetAndRevenueOption.title = {
         text: categoryName + " budeget and revenue",
         subtext: ""
       }
-      this.setOption.xAxis= [
+      this.setBudgetAndRevenueOption.xAxis= [
         {
           data: title
         }
       ]
-      
-      this.setOption.series = [ 
+
+      this.setBudgetAndRevenueOption.series = [ 
         {
           name : 'budget',
           type: 'bar',
@@ -315,7 +299,6 @@ export default {
             return element.pop;
           })
          
-          this.setMostPopOption.title.text = "Most popurlity movies in 2018"
           this.setMostPopOption.series = {
             data: moviePop.reverse(),
             type: 'bar',
@@ -396,41 +379,6 @@ li {
 }
 a {
   color: #42b983;
-}
-#lab_social_icon_footer {
-  background-color: #dedede;
-}
-
-#lab_social_icon_footer a {
-  color: #333;
-}
-
-#lab_social_icon_footer .social:hover {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
-}
-
-#lab_social_icon_footer .social {
-  -webkit-transform: scale(0.8);
-  /* Browser Variations: */
-  
-  -moz-transform: scale(0.8);
-  -o-transform: scale(0.8);
-  -webkit-transition-duration: 0.5s;
-  -moz-transition-duration: 0.5s;
-  -o-transition-duration: 0.5s;
-}
-/*
-    Multicoloured Hover Variations
-*/
-
-#lab_social_icon_footer #social-gb:hover {
-  color: #3B5998;
-}
-
-#lab_social_icon_footer #social-li:hover {
-  color: #4099FF;
 }
 
 </style>
