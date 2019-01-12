@@ -2,8 +2,8 @@
 
 module.exports = {
     outputDir: 'docs',
-    // baseUrl: '/open-movies-info/',
-    baseUrl: './',
+    baseUrl: '/open-movies-info/',
+    // baseUrl: './',
     productionSourceMap: false,
     transpileDependencies: [
         /\bvue-echarts\b/,
