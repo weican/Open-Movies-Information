@@ -25,7 +25,7 @@
             </b-col>
             <b-col cols="auto"  class="p-5">
               <div class="text-center center-block">
-              <a href="https://github.com/weican/cards-ui"><i id="social-gb" class="fa fa-github-square fa-3x social"></i></a>
+              <a href="https://github.com/weican/open-movies-information"><i id="social-gb" class="fa fa-github-square fa-3x social"></i></a>
               <a href="https://www.linkedin.com/in/wales-chang-41250b63/p"><i id="social-li" class="fa fa-linkedin-square fa-3x social"></i></a>
             </div>
             </b-col>
