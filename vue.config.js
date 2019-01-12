@@ -2,8 +2,9 @@
 
 module.exports = {
     outputDir: 'docs',
-    baseUrl: '/open-movies-info/',
-    // baseUrl: './',
+    baseUrl: process.env.NODE_ENV === 'production'
+    ? '/open-movies-information/'
+    : '/',
     productionSourceMap: false,
     transpileDependencies: [
         /\bvue-echarts\b/,
