@@ -41,10 +41,10 @@
               </b-card>
             </b-col>
             <b-col  class="shadow p-3 mb-5 bg-white rounded">
-              <b-card title= "Genre">
+              <b-card title= "Movie Genre List">
                 <b-list-group>
                   <b-list-group-item v-for="genre in selectedMovieGenre" @mouseover="genreMouseOver(genre.category_name)" button> 
-                    {{ genre.category_name }}
+                    <i class="fa fa-bar-chart" aria-hidden="true"></i> {{ genre.category_name }} 
                   </b-list-group-item>
                 </b-list-group>
               </b-card>
@@ -73,7 +73,7 @@ export default {
       subtitle: 'Providing movies information for you',
       movieData: [],
       baseImgUrl: "https://image.tmdb.org/t/p/w500/",
-      hostUrl: "http://localhost:8080/",
+      hostUrl: "https://open-movies-backend.herokuapp.com/",
       genreList: new Map(),
       selectedMovieGenre: [],
       selectedMovie: {
