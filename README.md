@@ -1,4 +1,5 @@
-# open-movies-info
+# Summary
+The Project Open Movies Information is a self-motivated project as a demonstration of my front-end skills such as VueJs, Javascript. This A-to-Z project is developed independently from scratch (very limited with the use of libraries) as well as it will be cpntantlly improving. The website is temporarily deployed on GitHub Page.
 
 ## Project setup
 ```
