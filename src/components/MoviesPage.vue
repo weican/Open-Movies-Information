@@ -14,21 +14,20 @@
                     <figure>
                       <chart style="width:100%; height:100%" ref="gauge" :options="setVoteOption"/>
                     </figure>
+                    <p class="text-left">Release date: {{selectedMovie.releaseData}}</p>
+                    <div class="text-left"><b>Overview:</b></div>
                     <p class="card-text text-left">
                       {{selectedMovie.overview}}
                     </p>
                   </b-col>
                 </b-row>
-                <div slot="footer">
-                    <small class="text-muted">Release date: {{selectedMovie.releaseData}}</small>
-                </div>
               </b-card>
             </b-col>
             <b-col class="shadow p-3 mb-5 bg-white rounded">
               <b-card>
-                <figure>
+               <figure>
                 <chart :options="setMostPopOption" ref="bar" @mouseover="mostPopMouseOver"/>
-                </figure>
+              </figure>
               </b-card>
             </b-col>
           </b-row>
@@ -36,15 +35,15 @@
             <b-col  class="shadow p-3 mb-5 mr-4 bg-white rounded">
               <b-card>
                 <figure>
-                <chart :options="setBudgetAndRevenueOption" ref="bar" />
+                  <chart :options="setBudgetAndRevenueOption" ref="bar" />
                 </figure>
               </b-card>
             </b-col>
             <b-col  class="shadow p-3 mb-5 bg-white rounded">
-              <b-card title= "Movie Genre List">
+              <b-card title= "The Movie Genres">
                 <b-list-group>
                   <b-list-group-item v-for="genre in selectedMovieGenre" @mouseover="genreMouseOver(genre.category_name)" button> 
-                    <i class="fa fa-bar-chart" aria-hidden="true"></i> {{ genre.category_name }} 
+                    <i class="fa fa-bar-chart float-left" aria-hidden="true"></i> {{ genre.category_name }}
                   </b-list-group-item>
                 </b-list-group>
               </b-card>
@@ -85,8 +84,10 @@ export default {
       setMostPopOption: {
         title: {
           text: "Most popurlity movies in 2018",
+          subtext:"Top 20 movies rated by TMDb",
           textStyle : {
-            fontSize: 22
+            fontSize: 22,
+            fontWeight: 'normal'
           }
         },
         grid: {
@@ -122,8 +123,10 @@ export default {
       setBudgetAndRevenueOption : {
         title: {
           text: "Budget/Rev chart",
+          subtext:"Presenting the budget and earned revenue of the same genres",
           textStyle : {
-            fontSize: 22
+            fontSize: 22,
+            fontWeight: 'normal'
           }
         },
         grid: {
@@ -262,7 +265,6 @@ export default {
       }
       this.setBudgetAndRevenueOption.title = {
         text: categoryName + " budeget and revenue",
-        subtext: ""
       }
       this.setBudgetAndRevenueOption.xAxis= [
         {
@@ -362,10 +364,10 @@ img {
   border-radius: 2px;
   transition: width 1s;
 }
-.echarts {
-  width: 500px;
-  height: 500px;
-}
+ .echarts {
+  width: 100%;
+  height: 600px;
+} 
 h3 {
   margin: 40px 0 0;
 }
