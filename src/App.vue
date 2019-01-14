@@ -2,7 +2,7 @@
   <div id="app">
   <b-navbar toggleable="md" type="dark" variant="dark">
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-    <b-navbar-brand href="#">About</b-navbar-brand>
+    <b-navbar-brand href="https://www.linkedin.com/in/wales-chang-41250b63/p">About</b-navbar-brand>
     <b-collapse is-nav id="nav_collapse">
 
       <!-- Right aligned nav items -->
@@ -13,8 +13,7 @@
     </b-collapse>
   </b-navbar>
 
-  <MoviesPage title="Rank of popular movies and the details"/>
-    
+  <MoviesPage title="Rank of popular movies"/>
         <section id="lab_social_icon_footer">
           <b-row>
             <b-col cols="auto" class="mr-auto p-5">
