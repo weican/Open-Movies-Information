@@ -2,7 +2,7 @@
   <div id="app">
   <b-navbar toggleable="md" type="dark" variant="dark">
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-    <b-navbar-brand href="https://www.linkedin.com/in/wales-chang-41250b63/p">About</b-navbar-brand>
+    <b-navbar-brand href="https://www.linkedin.com/in/wales-chang-41250b63/p">About Me</b-navbar-brand>
     <b-collapse is-nav id="nav_collapse">
 
       <!-- Right aligned nav items -->
@@ -15,20 +15,24 @@
 
   <MoviesPage title="Rank of popular movies"/>
         <section id="lab_social_icon_footer">
-          <b-row>
-            <b-col cols="auto" class="mr-auto p-5">
-              <footer class="page-footer font-small blue">
-              <div class="footer-copyright text-center py-2"><b>© 2019 Wales Chang</b>
+          <b-container fluid>
+            <b-row>
+              <b-col class="p-5">
+                  <div class="footer-copyright text-left py-2"><b>© 2019 Wales Chang</b>
+                  </div>
+              </b-col>
+              <b-col class="p-5">
+                  <div class="text-center py-2">All of movie's information are provided by TMDb
+                  </div>
+              </b-col>
+              <b-col class="p-5">
+                <div class="text-right center-block">
+                <a href="https://github.com/weican/open-movies-information"><i id="social-gb" class="fa fa-github-square fa-3x social"></i></a>
+                <a href="https://www.linkedin.com/in/wales-chang-41250b63/p"><i id="social-li" class="fa fa-linkedin-square fa-3x social"></i></a>
               </div>
-              </footer>
-            </b-col>
-            <b-col cols="auto"  class="p-5">
-              <div class="text-center center-block">
-              <a href="https://github.com/weican/open-movies-information"><i id="social-gb" class="fa fa-github-square fa-3x social"></i></a>
-              <a href="https://www.linkedin.com/in/wales-chang-41250b63/p"><i id="social-li" class="fa fa-linkedin-square fa-3x social"></i></a>
-            </div>
-            </b-col>
-          </b-row>
+              </b-col>
+            </b-row>
+          </b-container>
         </section>
   </div>
 
