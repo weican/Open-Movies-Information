@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-jumbotron header-level="5" v-bind:header="title" v-bind:lead="subtitle" >
+    <b-jumbotron header-level="6" v-bind:header="title" v-bind:lead="subtitle" >
     </b-jumbotron>
          <b-container fluid class="p-4">
           <b-row class="mb-4">
@@ -69,7 +69,8 @@ export default {
   },
   data() {
     return {
-      subtitle: 'Providing movies information for you',
+      subtitle: 'Providing the top 20 hit movies for you. \
+      You can see how many people are excited with these movies as well as getting more details in charts such as budget and revenue. ',
       movieData: [],
       baseImgUrl: "https://image.tmdb.org/t/p/w500/",
       hostUrl: "https://open-movies-backend.herokuapp.com/",
