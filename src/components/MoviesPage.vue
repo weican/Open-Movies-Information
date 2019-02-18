@@ -73,6 +73,8 @@ export default {
       movieData: [],
       baseImgUrl: "https://image.tmdb.org/t/p/w500/",
       hostUrl: "https://open-movies-backend.herokuapp.com/",
+      getAllMoviesPath: "public/getAll", 
+      getGenrePath: "public/getGenre",
       genreList: new Map(),
       selectedMovieGenre: [],
       selectedMovie: {
@@ -290,7 +292,7 @@ export default {
     getMoviesInfo: function() {
  
       axios
-      .get(this.hostUrl+ 'getAll')
+      .get(this.hostUrl + this.getAllMoviesPath)
       .then(
         response => { 
           this.movieData = response.data;
@@ -345,7 +347,7 @@ export default {
       )
       .then(() =>{
         axios
-          .get(this.hostUrl+ 'getGenre')
+          .get(this.hostUrl + this.getGenrePath)
           .then(response => {
             this.genreList = response.data;
             this.updateMoiveInfo(this.movieData.length-1);
