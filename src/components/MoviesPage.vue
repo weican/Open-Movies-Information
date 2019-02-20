@@ -227,6 +227,7 @@ export default {
         },
         textStyle: {
           "fontSize": "20",
+          "color" : "#1d60ac"
         }
       }
       this.setVoteOption.series[0].axisLine = {
