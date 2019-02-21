@@ -18,15 +18,10 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+# Declaration and Licence
+This project is maintained by Wales Chang and under MIT license, and the repository is hosted for the demonstration purpose. 
+
+🚨 Please use it in your own risks. The author is not responsible or obligated to any damage or lost if you decide to use any part of code hosted from this repository.
