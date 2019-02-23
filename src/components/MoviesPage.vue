@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       subtitle: 'Providing the top 20 hit movies for you. \
-      You can see how many people are excited with these movies as well as getting more details in charts such as budget and revenue. ',
+      You can see how many people are excited with these movies as well as getting more details in interactive charts such as budget and revenue. ',
       movieData: [],
       baseImgUrl: "https://image.tmdb.org/t/p/w500/",
       hostUrl: "https://open-movies-backend.herokuapp.com/",
@@ -86,7 +86,7 @@ export default {
       },
       setMostPopOption: {
         title: {
-          text: "Most popurlity movies in 2018",
+          text: "Rank of most popular movies in 2018",
           subtext:"Top 20 movies rated by TMDb",
           textStyle : {
             fontSize: 22,
