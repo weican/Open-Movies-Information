@@ -13,7 +13,7 @@
     </b-collapse>
   </b-navbar>
 
-  <MoviesPage title="Rank of popular movies"/>
+  <MoviesPage title="Movie Data Dashboard"/>
         <section id="lab_social_icon_footer">
           <b-container fluid>
             <b-row>
